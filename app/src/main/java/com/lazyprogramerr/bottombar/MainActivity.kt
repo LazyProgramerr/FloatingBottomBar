@@ -32,7 +32,38 @@ class MainActivity : ComponentActivity() {
         setContent {
             BottomBarTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding),
 
+                        ){
+                        val navController = rememberNavController()
+                        val items = navItems {
+                            item(Routes.S1.route,"S1",R.drawable.ic_launcher_foreground)
+                            item(Routes.S2.route,"S2",R.drawable.ic_launcher_foreground)
+                            item(Routes.S3.route,"S3",R.drawable.ic_launcher_foreground)
+                        }
+
+                        FloatingBottomBar(
+                            modifier = Modifier.wrapContentSize().align(Alignment.BottomCenter),
+                            navController = navController,
+                            navItems = items,
+                            startDestination = "S1",
+                            scenes = {
+                                composable(Routes.S1.route) { SS() }
+                                composable(Routes.S2.route) { SS() }
+                                composable(Routes.S3.route) { SS() }
+                            }
+
+                        ) { currentDestination, clickedRoute ->
+                            if (currentDestination != clickedRoute){
+                                navController.navigate(clickedRoute){
+                                    Toast.makeText(this@MainActivity,clickedRoute, Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -53,36 +84,6 @@ class MainActivity : ComponentActivity() {
     @Preview(showSystemUi = true)
     @Composable
     private fun t() {
-        Box(
-            modifier = Modifier
-                .fillMaxSize(),
 
-            ){
-            val navController = rememberNavController()
-            val items = navItems {
-                item(Routes.S1.route,"S1",R.drawable.ic_launcher_foreground)
-                item(Routes.S2.route,"S2",R.drawable.ic_launcher_foreground)
-                item(Routes.S3.route,"S3",R.drawable.ic_launcher_foreground)
-            }
-
-            FloatingBottomBar(
-                modifier = Modifier.wrapContentSize().align(Alignment.BottomCenter),
-                navController = navController,
-                navItems = items,
-                startDestination = "S1",
-                scenes = {
-                    composable(Routes.S1.route) { SS() }
-                    composable(Routes.S2.route) { SS() }
-                    composable(Routes.S3.route) { SS() }
-                }
-
-            ) { currentDestination, clickedRoute ->
-                if (currentDestination != clickedRoute){
-                    navController.navigate(clickedRoute){
-                        Toast.makeText(this@MainActivity,clickedRoute, Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        }
     }
 }
