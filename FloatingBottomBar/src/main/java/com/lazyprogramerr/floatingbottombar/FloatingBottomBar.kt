@@ -51,8 +51,8 @@ data class NavItem(
  * - Scenes: attach your NavGraph inside this lambda
  * - onItemSelected: optional callback when an item is clicked
  */
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 fun FloatingBottomBar(
     navController: NavHostController,
     navItems: List<NavItem>,
@@ -65,10 +65,9 @@ fun FloatingBottomBar(
     scenes: NavGraphBuilder.(NavHostController) -> Unit,
     onItemSelected: (currentRoute: String?, clickedRoute: String) -> Unit = { _, _ -> }
 ) {
-    val currentRoute by remember { navController.currentBackStackEntryAsState() }.let { stateFlow ->
-        // reading is done below
-        stateFlow.value?.destination?.route
-    }
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = currentBackStackEntry?.destination?.route
+
 
     Box(modifier = modifier) {
         // Nav host showing the screens
@@ -90,9 +89,6 @@ fun FloatingBottomBar(
                 scrollBehavior = scrollBehavior,
                 shape = barShape,
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
-                    .navigationBarsPadding()
             ) {
                 navItems.forEach { item ->
                     val isSelected = (currentRoute == item.route)
