@@ -1,1 +1,1 @@
-[![](https://jitpack.io/v/lazyprogramerr/FloatingBottomBar-compose.svg)](https://jitpack.io/#lazyprogramerr/FloatingBottomBar-compose)
+[![](https://jitpack.io/v/lazyprogramerr/FloatingBottomBar.svg)](https://jitpack.io/#lazyprogramerr/FloatingBottomBar)
