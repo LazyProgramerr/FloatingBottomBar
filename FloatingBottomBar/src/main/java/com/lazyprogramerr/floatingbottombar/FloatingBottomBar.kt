@@ -1,15 +1,20 @@
 package com.lazyprogramerr.floatingbottombar
 
+import android.widget.Space
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FloatingToolbarDefaults
 import androidx.compose.material3.FloatingToolbarScrollBehavior
 import androidx.compose.material3.HorizontalFloatingToolbar
 import androidx.compose.runtime.Composable
@@ -21,19 +26,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 
-/**
- * Stable API for consumers.
- */
-@Stable
-data class FloatingBottomBarState(
-    val startVisible: Boolean = true
-)
 
 /**
  * DSL-friendly NavItem builder (see below).
@@ -59,7 +58,7 @@ fun FloatingBottomBar(
     navItems: List<NavItem>,
     startDestination: String,
     modifier: Modifier = Modifier,
-    state: FloatingBottomBarState = FloatingBottomBarState(),
+    iconTextSpace: Dp = 2.dp,
     itemShape: Shape = RoundedCornerShape(50),
     barShape: Shape = RoundedCornerShape(25),
     scrollBehavior: FloatingToolbarScrollBehavior? = null,
@@ -69,49 +68,43 @@ fun FloatingBottomBar(
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
 
+    NavHost(
+        modifier = Modifier.fillMaxSize(),
+        navController = navController,
+        startDestination = startDestination
+    ) {
+        scenes(navController)
+    }
 
-    Box {
-        // Nav host showing the screens
-        NavHost(
-            modifier = Modifier.fillMaxSize(),
-            navController = navController,
-            startDestination = startDestination
+    Box(modifier = Modifier.fillMaxSize()) {
+
+        HorizontalFloatingToolbar(
+            expanded = false,
+            scrollBehavior = scrollBehavior,
+            shape = barShape,
+            modifier = modifier,
+            contentPadding = PaddingValues(20.dp)
         ) {
-            scenes(navController)
-        }
+            navItems.forEach { item ->
+                val isSelected = (currentRoute == item.route)
 
-        // animated visibility allows us to show/hide with fade
-        AnimatedVisibility(
-            visible = state.startVisible,
-            enter = fadeIn(animationSpec = tween(durationMillis = 260)),
-            exit = fadeOut(animationSpec = tween(durationMillis = 200)),
-        ) {
-            HorizontalFloatingToolbar(
-                expanded = false,
-                scrollBehavior = scrollBehavior,
-                shape = barShape,
-                modifier = modifier
-            ) {
-                navItems.forEach { item ->
-                    val isSelected = (currentRoute == item.route)
-
-                    // use the consumer-provided painter if available, otherwise from res id
-                    val painter = item.iconPainter ?: item.iconPainterResId?.let { res ->
-                        painterResource(id = res)
-                    }
-
-                    ShapableButton(
-                        onClick = { onItemSelected(currentRoute, item.route) },
-                        iconRes = painter,
-                        contentDescription = item.contentDescription ?: item.route,
-                        isSelected = isSelected,
-                        text = item.route,
-                        iconSize = 25.dp,
-                        uiAlignment = UiAlignment.CenterBottom,
-                        spacing = 2.dp,
-                        shape = itemShape
-                    )
+                // use the consumer-provided painter if available, otherwise from res id
+                val painter = item.iconPainter ?: item.iconPainterResId?.let { res ->
+                    painterResource(id = res)
                 }
+
+                ShapableButton(
+                    onClick = { onItemSelected(currentRoute, item.route) },
+                    iconRes = painter,
+                    contentDescription = item.contentDescription ?: item.route,
+                    isSelected = isSelected,
+                    text = item.route,
+                    iconSize = 25.dp,
+                    uiAlignment = UiAlignment.CenterBottom,
+                    spacing = iconTextSpace,
+                    shape = itemShape
+                )
+                Spacer(modifier.width(2.dp))
             }
         }
     }
