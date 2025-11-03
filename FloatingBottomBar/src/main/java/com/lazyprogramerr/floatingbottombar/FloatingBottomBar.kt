@@ -5,6 +5,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -69,9 +70,10 @@ fun FloatingBottomBar(
     val currentRoute = currentBackStackEntry?.destination?.route
 
 
-    Box(modifier = modifier) {
+    Box {
         // Nav host showing the screens
         NavHost(
+            modifier = Modifier.fillMaxSize(),
             navController = navController,
             startDestination = startDestination
         ) {
@@ -88,7 +90,7 @@ fun FloatingBottomBar(
                 expanded = false,
                 scrollBehavior = scrollBehavior,
                 shape = barShape,
-                modifier = Modifier
+                modifier = modifier
             ) {
                 navItems.forEach { item ->
                     val isSelected = (currentRoute == item.route)
