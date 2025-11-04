@@ -5,13 +5,16 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingToolbarDefaults
@@ -25,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -59,6 +63,8 @@ fun FloatingBottomBar(
     startDestination: String,
     modifier: Modifier = Modifier,
     iconTextSpace: Dp = 2.dp,
+    itemsSpacedBy : Arrangement.Horizontal = Arrangement.spacedBy(4.dp),
+    innerPaddingValues: PaddingValues = PaddingValues(10.dp),
     itemShape: Shape = RoundedCornerShape(50),
     barShape: Shape = RoundedCornerShape(25),
     scrollBehavior: FloatingToolbarScrollBehavior? = null,
@@ -76,35 +82,44 @@ fun FloatingBottomBar(
         scenes(navController)
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+
+    ) {
 
         HorizontalFloatingToolbar(
             expanded = false,
             scrollBehavior = scrollBehavior,
             shape = barShape,
             modifier = modifier,
-            contentPadding = PaddingValues(20.dp)
+            contentPadding = innerPaddingValues,
         ) {
-            navItems.forEach { item ->
-                val isSelected = (currentRoute == item.route)
+            Row (
+                modifier = Modifier.wrapContentSize(),
+                horizontalArrangement = itemsSpacedBy
+            ){
+                navItems.forEach { item ->
+                    val isSelected = (currentRoute == item.route)
 
-                // use the consumer-provided painter if available, otherwise from res id
-                val painter = item.iconPainter ?: item.iconPainterResId?.let { res ->
-                    painterResource(id = res)
+                    // use the consumer-provided painter if available, otherwise from res id
+                    val painter = item.iconPainter ?: item.iconPainterResId?.let { res ->
+                        painterResource(id = res)
+                    }
+
+                    ShapableButton(
+                        onClick = { onItemSelected(currentRoute, item.route) },
+                        iconRes = painter,
+                        contentDescription = item.contentDescription ?: item.route,
+                        isSelected = isSelected,
+                        text = item.route,
+                        iconSize = 25.dp,
+                        uiAlignment = UiAlignment.CenterBottom,
+                        spacing = iconTextSpace,
+                        shape = itemShape,
+                    )
+//                    Spacer(modifier.width(2.dp))
                 }
-
-                ShapableButton(
-                    onClick = { onItemSelected(currentRoute, item.route) },
-                    iconRes = painter,
-                    contentDescription = item.contentDescription ?: item.route,
-                    isSelected = isSelected,
-                    text = item.route,
-                    iconSize = 25.dp,
-                    uiAlignment = UiAlignment.CenterBottom,
-                    spacing = iconTextSpace,
-                    shape = itemShape
-                )
-                Spacer(modifier.width(2.dp))
             }
         }
     }
