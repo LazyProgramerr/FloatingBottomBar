@@ -1,5 +1,7 @@
 # FloatingBottomBar
 
+[![](https://jitpack.io/v/lazyprogramerr/FloatingBottomBar.svg)](https://jitpack.io/#lazyprogramerr/FloatingBottomBar)
+
 A customizable Floating Bottom Bar for Android Compose applications.
 
 ## Features and Functionality
@@ -231,7 +233,7 @@ Contributions are welcome! Please follow these guidelines:
 
 ## License Information
 
-No license has been specified for this project.  All rights are reserved by the author.
+All rights are reserved by the author.
 
 ## Contact/Support Information
 
