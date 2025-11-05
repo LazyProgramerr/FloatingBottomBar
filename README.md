@@ -90,9 +90,9 @@ This library provides a `FloatingBottomBar` composable that allows you to easily
 ## Screenshots
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/LazyProgramerr/FloatingBottomBar/master/Sources/images/Home_Screne.png" width="30%" />
-  <img src="https://raw.githubusercontent.com/LazyProgramerr/FloatingBottomBar/master/Sources/images/Favourites_Screne.png" width="30%" />
-  <img src="https://raw.githubusercontent.com/LazyProgramerr/FloatingBottomBar/master/Sources/images/Profile_Screne.png" width="30%" />
+  <img src="https://raw.githubusercontent.com/LazyProgramerr/FloatingBottomBar/master/Sources/images/Home_Screen.jpg" width="30%" />
+  <img src="https://raw.githubusercontent.com/LazyProgramerr/FloatingBottomBar/master/Sources/images/Favourites_Screen.jpg" width="30%" />
+  <img src="https://raw.githubusercontent.com/LazyProgramerr/FloatingBottomBar/master/Sources/images/Profile_Screen.jpg" width="30%" />
 </p>
 
 
