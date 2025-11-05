@@ -8,7 +8,7 @@ A customizable floating bottom bar component for Android Compose applications.
 This library provides a `FloatingBottomBar` composable that allows you to easily create a floating navigation bar in your Android application using Jetpack Compose. It supports customizable icons, colors, shapes, and scrolling behavior.  It uses the experimental Material 3 Expressive API.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/LazyProgramerr/FloatingBottomBar/Sources/images/BottomBar.png" alt="Floating Bottom Bar Preview" width="80%">
+  <img src="https://raw.githubusercontent.com/LazyProgramerr/FloatingBottomBar/master/Sources/images/BottomBar.png" alt="Floating Bottom Bar Preview" width="80%">
 </p>
 
 
@@ -90,9 +90,9 @@ This library provides a `FloatingBottomBar` composable that allows you to easily
 ## Screenshots
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/LazyProgramerr/FloatingBottomBar/Sources/images/Home_Screne.png" width="30%" />
-  <img src="https://raw.githubusercontent.com/LazyProgramerr/FloatingBottomBar/Sources/images/Favourites_Screne.png" width="30%" />
-  <img src="https://raw.githubusercontent.com/LazyProgramerr/FloatingBottomBar/Sources/images/Profile_Screne.png" width="30%" />
+  <img src="https://raw.githubusercontent.com/LazyProgramerr/FloatingBottomBar/master/Sources/images/Home_Screne.png" width="30%" />
+  <img src="https://raw.githubusercontent.com/LazyProgramerr/FloatingBottomBar/master/Sources/images/Favourites_Screne.png" width="30%" />
+  <img src="https://raw.githubusercontent.com/LazyProgramerr/FloatingBottomBar/master/Sources/images/Profile_Screne.png" width="30%" />
 </p>
 
 
