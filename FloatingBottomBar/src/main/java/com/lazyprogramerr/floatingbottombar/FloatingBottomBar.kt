@@ -26,12 +26,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -63,6 +66,14 @@ fun FloatingBottomBar(
     startDestination: String,
     modifier: Modifier = Modifier,
     iconTextSpace: Dp = 2.dp,
+    iconSize: Dp = 25.dp,
+    textSize: TextUnit = 17.sp,
+    iconColor: Color = ButtonBlack,
+    onClickColor: Color = ButtonOrange,
+    itemColor: Color = ButtonBlue,
+    itemStrokeColor: Color = ButtonBlack,
+    itemStrokeWidth: Dp = 2.dp,
+    iconsArrangement: UiAlignment = UiAlignment.CenterTop,
     itemsSpacedBy : Arrangement.Horizontal = Arrangement.spacedBy(4.dp),
     innerPaddingValues: PaddingValues = PaddingValues(10.dp),
     itemShape: Shape = RoundedCornerShape(50),
@@ -113,10 +124,16 @@ fun FloatingBottomBar(
                         contentDescription = item.contentDescription ?: item.route,
                         isSelected = isSelected,
                         text = item.route,
-                        iconSize = 25.dp,
-                        uiAlignment = UiAlignment.CenterBottom,
+                        iconSize = iconSize,
+                        uiAlignment = iconsArrangement,
                         spacing = iconTextSpace,
                         shape = itemShape,
+                        textSize = textSize,
+                        iconColor = iconColor,
+                        onClickColor = onClickColor,
+                        backgroundColor = itemColor,
+                        strokeColor = itemStrokeColor,
+                        strokeWidth = itemStrokeWidth,
                     )
 //                    Spacer(modifier.width(2.dp))
                 }

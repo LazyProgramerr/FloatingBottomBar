@@ -1,6 +1,7 @@
 package com.lazyprogramerr.bottombar
 
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -54,23 +55,23 @@ class MainActivity : ComponentActivity() {
                     ){
                         val navController = rememberNavController()
                         val items = navItems {
-                            item(Routes.S1.route,"S1",R.drawable.ic_launcher_foreground)
-                            item(Routes.S2.route,"S2",R.drawable.ic_launcher_foreground)
-                            item(Routes.S3.route,"S3",R.drawable.ic_launcher_foreground)
+                            item(Routes.Home.route, "Home", R.drawable.home)
+                            item(Routes.Favourites.route, "Favourites", R.drawable.star)
+                            item(Routes.Profile.route, "Profile", R.drawable.person)
                         }
-
 
                         FloatingBottomBar(
                             modifier = Modifier.wrapContentSize().align(Alignment.BottomCenter),
                             navController = navController,
                             navItems = items,
-                            startDestination = "S1",
+
+                            startDestination = Routes.Home.route,
                             itemsSpacedBy = Arrangement.spacedBy(3.dp),
                             scrollBehavior = scrollBehavior,
                             scenes = {
-                                composable(Routes.S1.route) { SS() }
-                                composable(Routes.S2.route) { S1() }
-                                composable(Routes.S3.route) { S2() }
+                                composable(Routes.Home.route) { Home() }
+                                composable(Routes.Favourites.route) { Favourites() }
+                                composable(Routes.Profile.route) { Profile() }
                             }
 
                         ) { currentDestination, clickedRoute ->
@@ -88,33 +89,29 @@ class MainActivity : ComponentActivity() {
     }
 
     sealed class Routes(val route: String){
-        object S1: Routes("S1")
-        object S2: Routes("S2")
-        object S3: Routes("S3")
+        object Home: Routes("Home")
+        object Favourites: Routes("Favourites")
+        object Profile: Routes("Profile")
     }
 
     @Composable
-    fun SS(modifier: Modifier = Modifier) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            val lt = List(75) {"Item #${it + 1}"}
-
-            itemsIndexed(lt){
-                    index,item ->
-                Text(item)
-            }
+    fun Home(modifier: Modifier = Modifier) {
+        Box(modifier = Modifier.fillMaxSize()){
+            Text(modifier = Modifier.wrapContentSize().align(Alignment.Center), text = "this is Home Scene")
         }
     }
     @Composable
-    fun S1(modifier: Modifier = Modifier) {
-        Text("hello from page1")
+    fun Favourites(modifier: Modifier = Modifier) {
+        Box(modifier = Modifier.fillMaxSize()){
+            Text(modifier = Modifier.wrapContentSize().align(Alignment.Center), text = "this is Favourites Scene")
+        }
     }
 
     @Composable
-    fun S2(modifier: Modifier = Modifier) {
-        Text("hello from page3")
+    fun Profile(modifier: Modifier = Modifier) {
+        Box(modifier = Modifier.fillMaxSize()){
+            Text(modifier = Modifier.wrapContentSize().align(Alignment.Center), text = "this is Profile Scene")
+        }
     }
 
     @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -129,22 +126,22 @@ class MainActivity : ComponentActivity() {
             ){
             val navController = rememberNavController()
             val items = navItems {
-                item(Routes.S1.route,"S1",R.drawable.ic_launcher_foreground)
-                item(Routes.S2.route,"S2",R.drawable.ic_launcher_foreground)
-                item(Routes.S3.route,"S3",R.drawable.ic_launcher_foreground)
+                item(Routes.Home.route,"Home",R.drawable.home)
+                item(Routes.Favourites.route,"Favourites",R.drawable.star)
+                item(Routes.Profile.route,"Profile",R.drawable.person)
             }
 
             FloatingBottomBar(
                 modifier = Modifier.wrapContentSize().align(Alignment.BottomEnd),
                 navController = navController,
                 navItems = items,
-                startDestination = "S1",
+                startDestination = Routes.Home.route,
                 
                 itemsSpacedBy = Arrangement.spacedBy(5.dp),
                 scenes = {
-                    composable(Routes.S1.route) { SS() }
-                    composable(Routes.S2.route) { SS() }
-                    composable(Routes.S3.route) { SS() }
+                    composable(Routes.Home.route) { Home() }
+                    composable(Routes.Favourites.route) { Favourites() }
+                    composable(Routes.Profile.route) { Profile() }
                 }
 
             ) { currentDestination, clickedRoute ->

@@ -49,6 +49,7 @@ fun ShapableButton(
     uiAlignment: UiAlignment = UiAlignment.Center,
     isSelected: Boolean = false,
     spacing: Dp = 6.dp,
+    strokeWidth: Dp = 2.dp,
     onClick: () -> Unit
 ) {
     val interaction = remember { MutableInteractionSource() }
@@ -58,7 +59,7 @@ fun ShapableButton(
     Box(
         modifier = modifier
             .background(bgColor, shape)
-            .border(2.dp, strokeColor, shape)
+            .border(strokeWidth, strokeColor, shape)
             .clickable(
                 interactionSource = interaction,
                 indication = null,
